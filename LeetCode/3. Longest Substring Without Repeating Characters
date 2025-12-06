@@ -1,0 +1,23 @@
+Given a string s, find the length of the longest substring without duplicate characters.
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        vector<int> lastIndex(256, -1); // stores last seen index of each character
+        int left = 0, maxLen = 0;
+
+        for (int right = 0; right < s.size(); right++) {
+            char c = s[right];
+
+            // if we see a duplicate character, move the left pointer
+            if (lastIndex[c] >= left) {
+                left = lastIndex[c] + 1;
+            }
+
+            lastIndex[c] = right;                // update last seen index
+            maxLen = max(maxLen, right - left + 1); 
+        }
+
+        return maxLen;
+    }
+};
